@@ -1,0 +1,12 @@
+{
+    "name": "alexanderdmitriev/htdocs",
+    "authors": [
+        {
+            "name": "alex1998dmit",
+            "email": "alex1998dmit@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}
