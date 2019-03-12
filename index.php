@@ -2,18 +2,20 @@
 
 define("DS", DIRECTORY_SEPARATOR);
 define("ROOT", realpath(dirname(__DIR__)) . DS);
-define("VENDORDIR", ROOT . "vendor" . DS);
-define("ROUTEDIR", ROOT . "src" . DS . "routes" . DS);
-define("TEMPLATEDIR", ROOT . "templates" . DS);
-define("LANGUAGEDIR", ROOT . "languages" . DS);
+define("VENDORDIR", __DIR__. DS . "vendor" . DS);
+define("ROUTEDIR", __DIR__ . DS . "app" . DS . "routes" . DS);
+define("TEMPLATEDIR", __DIR__ .  DS . "templates" . DS);
 
 require __DIR__ . '/vendor/autoload.php';
+
+session_start();
 
 $configuration = [
     'settings' => [
         // Slim Settings
         'determineRouteBeforeAppMiddleware' => false,
         'displayErrorDetails' => true,
+        'templates.path' => TEMPLATEDIR . $settings->template . DS,
         // 'db' => [
         //     'driver' => 'mysql',
         //     'host' => 'localhost',
@@ -27,11 +29,22 @@ $configuration = [
     ],
 ];
 
+
 $app = new \Slim\App($configuration);
+$container = $app->getContainer();
+
+$container['view'] = function($container) {
+    $view = new \Slim\Views\Twig(TEMPLATEDIR, [
+        'cache' => false,        
+    ]);
+    $router = $container->get('router');
+    $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
+    $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
+    return $view;
+};
 
 
-$app->get('/', function ($request, $response, $args) {
-    return $response->write("Hello");
-});
+require __DIR__ . '/app/routes/index.php';
+
 
 $app->run();
