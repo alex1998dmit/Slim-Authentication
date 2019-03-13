@@ -1,47 +1,15 @@
 <?php 
 
 
+require __DIR__ . '/vendor/autoload.php';
 
 // Constants 
 require __DIR__ . '/config/constants.php';
 
-//
-
-$db_settings =  array(
-    'driver' => 'mysql',
-    'host' => 'localhost',
-    'database' => 'cornell',
-    'username' => 'root',
-    'password' => 'root',
-    'prefix' => '',
-    'charset' => 'utf8',
-    'collation' => 'utf8_general_ci',
-);
-
-require __DIR__ . '/vendor/autoload.php';
-
+// Database config
+require __DIR__ . '/config/database.php';
 
 session_start();
-
-$configuration = [
-    'settings' => [
-        // Slim Settings
-        'determineRouteBeforeAppMiddleware' => false,
-        'displayErrorDetails' => true,
-        'templates.path' => TEMPLATEDIR . $settings->template . DS,
-        'db' => [
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'database' => 'cornell',
-            'username' => 'root',
-            'password' => 'root',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ]
-    ],
-];
-
 
 $app = new \Slim\App($configuration);
 $container = $app->getContainer();
