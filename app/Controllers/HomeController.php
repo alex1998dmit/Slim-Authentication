@@ -15,6 +15,16 @@ class HomeController extends Controller
       return $this->container->view->render($response, 'index.html');
    }
 
+   // for react test 
+   public function getUsers($request, $response) {
+      $result = [
+         'status' => 'ok', 
+         'errorCode' => 0
+      ];
+      $app->response->setStatus(200);
+      $app->response['Content-Type'] = 'application/json';
+   }
+
 }
 
 ?>

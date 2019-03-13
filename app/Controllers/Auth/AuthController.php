@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function postSignUp($request, $responce) 
     {
 
-        $validation = $this->validator->validate($request, [
+        $validation = $this->container->validator->validate($request, [
             'email' => v::noWhitespace()->notEmpty(),
             'name' => v::noWhitespace()->notEmpty()->alpha(),
             'password' => v::noWhitespace()->notEmpty(),
@@ -30,7 +30,7 @@ class AuthController extends Controller
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
         
-        return $responce->withRedirect($this->router->pathFor('home'));
+        return $responce->withRedirect($this->router->pathFor('auth.signUp'));
     }
 
 }
