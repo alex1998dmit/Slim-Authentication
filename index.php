@@ -1,6 +1,6 @@
 <?php 
 
-
+// Run autoload classes 
 require __DIR__ . '/vendor/autoload.php';
 
 // Constants 
@@ -9,12 +9,15 @@ require __DIR__ . '/config/constants.php';
 // Database config
 require __DIR__ . '/config/database.php';
 
+// Slim configurations
+require __DIR__ . '/config/configurations.php';
+
 session_start();
 
 $app = new \Slim\App($configuration);
 $container = $app->getContainer();
 
-
+// Adding twigs
 $container['view'] = function($container) {
     $view = new \Slim\Views\Twig(TEMPLATEDIR, [
         'cache' => false,        
@@ -25,22 +28,10 @@ $container['view'] = function($container) {
     return $view;
 };
 
-
+// First Controller
 $container['HomeController'] = function($container) {
     return new App\Controllers\HomeController;
 };
-
-// database
-
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-$capsule = new Capsule;
-
-$capsule->addConnection($db_settings);
-$capsule->bootEloquent();
-$capsule->setAsGlobal();
-$app->db = $capsule;
-
 
 require __DIR__ . '/app/routes/index.php';
 $app->run();

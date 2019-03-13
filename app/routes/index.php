@@ -10,4 +10,4 @@ $app->get('/hello/{name}', function ($request, $response, $args) {
 
 $app->get('/hello', 'HomeController:index');
 
-
+// $app->get('/hello', 'HomeController:showAll');
