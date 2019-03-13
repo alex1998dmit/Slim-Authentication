@@ -2,12 +2,16 @@
 
 namespace App\Controllers;
 
+use \Slim\Views\Twig as View; 
+use \App\Controllers\Controller as Controller;
 
-class HomeController
+
+class HomeController extends Controller
 {
+
    public function index($request, $response)
    {
-        return 'Hello home controller';
+        return $this->container->view->render($response, 'index.html');
    }
 
 }

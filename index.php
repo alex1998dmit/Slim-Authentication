@@ -19,7 +19,7 @@ $container = $app->getContainer();
 
 // Adding twigs
 $container['view'] = function($container) {
-    $view = new \Slim\Views\Twig(TEMPLATEDIR, [
+    $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
         'cache' => false,        
     ]);
     $router = $container->get('router');
@@ -30,7 +30,7 @@ $container['view'] = function($container) {
 
 // First Controller
 $container['HomeController'] = function($container) {
-    return new App\Controllers\HomeController;
+    return new App\Controllers\HomeController($container);
 };
 
 require __DIR__ . '/app/routes/index.php';
