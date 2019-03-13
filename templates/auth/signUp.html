@@ -7,7 +7,7 @@
        <div class="panel panel-default">
            <div class="panel-heading">Sign up</div>
            <div class="panel-body">
-               <form action="{{ path_for('auth.signUp') }}" method="POST">
+               <form action="{{ path_for('auth.signUp') }}" method="POST" autocomplete="off">
                    <div class="form-group">
                        <label for="email">Email</label>
                        <input type="email" name="email" id="email" placeholder="your email" class="form-control">
