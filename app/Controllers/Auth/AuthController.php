@@ -10,6 +10,24 @@ use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
 {
+    public function getSignIn($request, $responce) 
+    {   
+        return $this->view->render($responce, 'auth/signIn.html');
+    }
+
+    public function postSignIn($request, $responce) 
+    {
+        $auth = $this->auth->attempt(
+            $request->getParam('email'),
+            $request->getParam('password')
+        );
+        if(!$auth) {
+            return $responce->withRedirect($this->router->pathFor('auth.signIn'));;
+        }
+
+        return $responce->withRedirect($this->router->pathFor('home'));
+    }
+
     public function getSignUp($request, $responce) 
     {
         return $this->view->render($responce, 'auth/signUp.html');
