@@ -47,12 +47,20 @@ class AuthController extends Controller
             return $responce->withRedirect($this->router->pathFor('auth.signUp'));
         }
 
-        User::create([
+        $user = User::create([
             'email' => $request->getParam('email'),
             'name' => $request->getParam('name'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
-        return $responce->withRedirect($this->router->pathFor('auth.signUp'));
+
+        var_dump('hello');
+        // die();
+        // $auth = $this->auth->attempt(
+        //     $request->getParam('email'),
+        //     $request->getParam('password')
+        // );
+        $this->auth->attempt($user->email, $request->getParam('password'));
+        return $responce->withRedirect($this->router->pathFor('home'));
     }
 
 }
