@@ -53,13 +53,13 @@ class AuthController extends Controller
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
 
-        var_dump('hello');
-        // die();
-        // $auth = $this->auth->attempt(
-        //     $request->getParam('email'),
-        //     $request->getParam('password')
-        // );
         $this->auth->attempt($user->email, $request->getParam('password'));
+        return $responce->withRedirect($this->router->pathFor('home'));
+    }
+
+    public function getSignOut($request, $responce) 
+    {
+        $this->auth->logout();
         return $responce->withRedirect($this->router->pathFor('home'));
     }
 

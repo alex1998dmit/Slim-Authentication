@@ -12,5 +12,9 @@ $app->post('/auth/signup', 'AuthController:postSignUp');
 $app->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signIn');
 $app->post('/auth/signin', 'AuthController:postSignIn');
 
+//Sign out 
+$app->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signOut');
+
+
 // React testing 
 $app->get('/react/test/users', 'HomeController:getUsers');
