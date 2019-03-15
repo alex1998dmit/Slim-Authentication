@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\HomeController;
+use App\Middleware\AuthMiddleware;
 
 $app->get('/hello', 'HomeController:index')->setName('home');
 
@@ -13,8 +14,12 @@ $app->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signIn');
 $app->post('/auth/signin', 'AuthController:postSignIn');
 
 //Sign out 
-$app->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signOut');
 
 
 // React testing 
 $app->get('/react/test/users', 'HomeController:getUsers');
+
+
+$app->group('', function() {
+    $this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signOut');
+})->add(new AuthMiddleware($container));
