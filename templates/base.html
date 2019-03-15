@@ -8,7 +8,8 @@
     </head>
     <body>
         {% include '/partials/navigation.html' %}
-        <div class="container">            
+        <div class="container">
+            {% include '/partials/flash.twig'%}           
             {% block content %}
             {% endblock %}
             <div id="footer">

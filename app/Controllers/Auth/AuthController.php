@@ -22,7 +22,8 @@ class AuthController extends Controller
             $request->getParam('password')
         );
         if(!$auth) {
-            return $responce->withRedirect($this->router->pathFor('auth.signIn'));;
+            $this->flash->addMessage('error', 'Could not sign in with detalis');
+            return $responce->withRedirect($this->router->pathFor('auth.signIn'));
         }
 
         return $responce->withRedirect($this->router->pathFor('home'));
@@ -52,6 +53,8 @@ class AuthController extends Controller
             'name' => $request->getParam('name'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
+
+        $this->flash->addMessage('info', 'You have signed up');
 
         $this->auth->attempt($user->email, $request->getParam('password'));
         return $responce->withRedirect($this->router->pathFor('home'));
